@@ -31,15 +31,22 @@ def decale_car(car, cle):
 def chiffre_cesar(clair, cle):
     """ str, int -> str
     Chiffre le clair avec le chiffrement de César (cle = décalage) """
-    pass
+    return "".join([decale_car(c, cle) for c in clair])
+    # chiffre = ""
+    # for car in clair:
+    #     chiffre += decale_car(car, cle)
+    # return chiffre
 
 def dechiffre_cesar(chiffre, cle):
     """ str, int -> str
     Renvoie le texte clair vérifiant chiffre = chiffre_cesar(clair, cle) """
-    pass
+    return chiffre_cesar(chiffre, -cle)
+
+# la valeur de la clé est la même pour chiffrer
+# ou déchiffrer : c'est un chiffrement symétrique
 
 # Texte de l'énigme
-"""
+chiffre = """
 OH 28 DYULO 1942, D ZDVKLQJWRQ G.F.
 
 D TXL GH GURLW.
@@ -49,11 +56,56 @@ HOLCDEHWK VPLWK IULHGPDQ.
 SRVW-VFULSWXP : SRUWHC FH YLHXA ZLVNB DX MXJH EORQG TXL IXPH. 
 """
 
+# on suppose que "OH" correspond à "LE"
+# on devine le décalage = 3
+# car de E à H : 3 lettres
+
 # Texte déchiffré
+# dechiffre_cesar(chiffre, 3)
+
+def indice_lettre(c):
+    """ str -> int
+    Renvoie l'indice dans l'alphabet de la lettre capitale c. """
+    return ord(c) - ord('A')
+
+cle = [indice_lettre(c) for c in "NSI"]
+print(cle)
 
 
 def chiffre_vigenere(clair, cle):
     """ str, [int] -> str
     Chiffrement de Vigenère """
-    pass
+    chiffre = []
+    compteur = 0
+    m = len(clair)
+    n = len(cle)
+    cle = cle*((m//n)+1)
+    for c in clair:
+        chiffre.append(chiffre_cesar(c,cle[compteur]))
+        compteur+=1
+    return "".join(chiffre)
+
+# À retenir :
+# différence entre codage et chiffrement :
+# codage = référence commune, partagée, publique
+# (exemple : ASCII, Morse, unicode)
+# chiffrement = se base sur une clé secrète.
+# des méthodes pour chiffer et déchiffrer :
+# on a besoin de :
+# - une méthode de chiffrement
+# - une clé qui est partagée : on utilise
+# la même clé pour le chiffrement et le
+# déchiffrement (fonctionnement symétrique).
+# Une personne qui ne connait pas la clé ne
+# peut pas
+# - chiffrer un message
+# - déchiffrer le message
+
+
+
+
+
+
+
+
 
